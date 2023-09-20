@@ -22,7 +22,7 @@ cols = ["nameOfIssuer", "value", "sshPrnamt"]
 rows = []
   
 # Parsing the XML file
-xmlparse = Xet.parse('input.xml')
+xmlparse = Xet.parse('xml_to_csv_folder\\input.xml')
 # root = xmlparse.getroot()
 for i in xmlparse.findall("infoTable"):
     nameOfIssuer = i.find("nameOfIssuer").text
@@ -40,5 +40,5 @@ df = pd.DataFrame(rows, columns=cols)
 df = df.groupby(['nameOfIssuer'])[['value', 'sshPrnamt']].sum().reset_index()
 
 # Writing dataframe to csv
-df.to_csv('output.csv', header=False, index=False)
+df.to_csv('xml_to_csv_folder\\output.csv', header=False, index=False)
 print(2)
