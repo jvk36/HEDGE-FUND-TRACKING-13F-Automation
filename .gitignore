@@ -14,6 +14,12 @@ local.properties
 *.mp3
 *.zip
 
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Python Environment
+.env/
+
 # Files for the ART/Dalvik VM
 *.dex
 
