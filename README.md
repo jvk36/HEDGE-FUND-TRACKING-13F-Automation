@@ -13,7 +13,7 @@ reader with 80% or more of the information in the report without having to read
 through the whole text. A vanilla BART sequence-to-sequence encoder-decoder 
 classifier can provide reasonable summaries:
 
-vanilla_summarizer.py: TO DO. It takes the text of a quarterly report as input 
+vanilla_summarizer.py: It takes the text of a quarterly report as input 
                        and generates a summary using the default model used 
                        by the Hugging Face transformer model API, 
                        sshleifer/distilbart-cnn-12-6. 
@@ -22,7 +22,8 @@ While BART is able to provide reasonable summaries, a more specialized model
 should be more useful to the readership. We fine-tune the vanilla BART  model
 on a dataset that contains quarterly reports done over the last decade on the 
 top hedge funds to generate summaries that can be directly used in the reports.
-The dataset for fine-tuning is collected by running the following pipeline:
+The dataset for fine-tuning is collected and pushed to Hugging Face by running 
+the following pipeline:
 a) copy_all_docx_to_output_folder.py: The script consolidates all the Microsoft
    word documents that contain quarterly reports of each of the hedge funds into
    an output folder.
@@ -32,9 +33,28 @@ c) convert_all_text_to_csv.py: The script takes the folder containing the text
    documents and returns a csv file with title and body as the columns. The quarterly
    reports from all the hedge fund documents from the past decade are consolidated into
    a single file. This will be the dataset used for fine-tuning.
+d) push_to_hub_13F_Reports.ipyng: pushed to Hugging Face hub the 13F Reports dataset.
 
-TO DO: Fine tuning the BART model and using it to generate summaries.
 
+fine_tune_summarizer_model.py: It fine tunes the BART model facebook/bart-large-cnn 
+                               to create an optimized model for 13F Reports summary
+                               using the jkv53/13F_Reports dataset in the Hugging Face
+                               Hub. 
+                               NOTE: The model is not yet created successfully, as
+                               it seems to need a GPU/TPU with large amounts of memory
+                               to train.
+
+This model can be further optimized by training it with labeled data. Although 
+fine-tuning an unsupervised BART model doesn't require label data, it can benefit from
+it. To do this, we modify the training data generation pipeline to generate an extra
+column in the csv file with training data:
+
+a) convert_all_text_to_csv_with_labels.py: TO DO: The script takes the folder containing the text 
+   documents and returns a csv file with title, body, and label as columns. The quarterly
+   reports from all the hedge fund documents from the past decade are consolidated into
+   a single file. This will be the dataset used for fine-tuning.
+
+TO DO: a fine tuner module similar to the above that uses the label data as well to tain.
 
 2. Build a Quarter-over Quarter Comparison Spreadsheet: 13f-xml-to-csv.py
 

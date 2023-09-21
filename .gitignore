@@ -14,6 +14,9 @@ local.properties
 *.mp3
 *.zip
 
+# notebook used for test purposes
+test.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
