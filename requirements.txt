@@ -1,0 +1,3 @@
+pandas
+xml-python
+python-docx

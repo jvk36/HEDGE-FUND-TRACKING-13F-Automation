@@ -13,7 +13,12 @@ local.properties
 *.jpg
 *.mp3
 *.zip
-*.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Python Environment
+.env/
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -26,6 +31,10 @@ bin/
 gen/
 out/
 lib/
+docs_folder/
+txt_folder/
+csv_folder/
+xml_to_csv_folder/
 
 #  Uncomment the following line in case you need and you don't have the release build type files in your app
 # release/
