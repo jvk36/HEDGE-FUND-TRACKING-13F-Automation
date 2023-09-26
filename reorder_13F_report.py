@@ -2,6 +2,10 @@
 #
 # USAGE NOTES:
 #
+# Ensure input_csv_file_path, input_text_file_path & output_text_file_path values in the main program
+# are updated, if you need to change the defaults - 
+#   csv_folder\\13F_INPUT.csv, txt_folder\\13F_INPUT.txt, and txt_folder\\13F_REORDERED.txt.
+#
 # Input Files:
 #
 # 1. input_csv_file_path -  only minor adjustments should need to be done to create the new report. 
@@ -10,7 +14,9 @@
 #          that the list is sorted by position size as it should be in the final report.
 #       b) Ensure that the first column that has the Company Names and Ticker matches the 
 #          names used in the report exactly. This is so that the reordering logic finds the 
-#          matching reports in the input text file.
+#          matching reports in the input text file. 
+#          NOTE: extract_names_and_tickers script may be used to sync the names in the csv and the
+#           report, if need be.
 # 2. input_text_file_path - The text file can be a cut and paste from the word document
 #      that contains the prior quarter report with the following edits: 
 #       a) Remove everthing other than the quarterly activity of the positions - this includes 
@@ -121,13 +127,13 @@ def process_csv_file(input_csv_file_path, input_text_file_path, output_text_file
 
 if __name__ == '__main__':
   # Get the path to the input CSV file.
-  input_csv_file_path = 'csv_folder\\13F-Filings - Cathie Wood - ARK Invest.csv'
+  input_csv_file_path = 'csv_folder\\13F_INPUT.csv'
 
   # Get the path to the input text file.
-  input_text_file_path = 'txt_folder\\13F-ARK-INPUT.txt'
+  input_text_file_path = 'txt_folder\\13F_INPUT.txt'
 
   # Get the path to the output text file.
-  output_text_file_path = 'txt_folder\\13F-ARK-OUTPUT.txt'
+  output_text_file_path = 'txt_folder\\13F_REORDERED.txt'
 
   # Process the CSV and text files.
   process_csv_file(input_csv_file_path, input_text_file_path, output_text_file_path)

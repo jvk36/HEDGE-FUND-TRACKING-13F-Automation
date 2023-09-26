@@ -78,7 +78,7 @@ a key component of the quarterly reports.
       are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
       "KEPT STEADY". The trading activity of each stock in the report is then updated to 
       include the activity that quarter and the current stock price.
-   b) generate_13F_activity.py: TO DO. The program takes a csv file containing the 
+   b) generate_13F_activity.py: The program takes a csv file containing the 
       quarter-over-quarter activity and outputs a line of text for each security that 
       explains the activity and the stock-price-range during the quarter.
       
