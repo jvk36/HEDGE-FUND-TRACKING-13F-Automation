@@ -42,7 +42,7 @@ fine_tune_summarizer_model.py: It fine tunes the BART model facebook/bart-large-
    NOTE: The model is not yet created successfully, as it seems to need a GPU/TPU 
    with large amounts of memory to train.
 
-This model can be further optimized by training it with labeled data. Although 
+This model is further optimized by training it with labeled data. Although 
 fine-tuning an unsupervised BART model doesn't require label data, it can benefit from
 it. To do this, we modify the training data generation pipeline to generate an extra
 column in the csv file with training data:
@@ -67,19 +67,21 @@ outputs a csv file that consolidates the information. The CSV content is then
 incorporated into a Quarter-over-Quarter comparison spreadsheet which forms
 a key component of the quarterly reports.
 
-3. Build a program that reorders sections and explains the trading activity 
-   of each stock in the 13F report: TO DO. 
+3. Build a pipeline that reorders sections and explains the trading activity 
+   of each stock in the 13F report: 
 
-The program should take a csv containing the quarter-over-quarter activity along
-with the previous quarter's report text categorized in sections as input. The 
-program then looks at the share-count change of each position quarter-over-quarter 
-in the csv file to determine the section the activity should be reported under. It then
-re-organizes the report into sections based on the quarterly activity. The sections
-are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and "KEPT STEADY".
-The trading activity of each stock in the report is then updated to include the 
-activity that quarter and the current stock price.
-
-NOTE: The activities are clubbed together based on a percentage threshold.
+   a) reorder_13F_report.py: The program takes a csv containing the quarter-over-quarter 
+      activity along with the previous quarter's report text as input. The program then 
+      looks at the share-count change of each position quarter-over-quarter in the csv 
+      file to determine the section the activity should be reported under. It then
+      re-organizes the report into sections based on the quarterly activity. The sections
+      are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
+      "KEPT STEADY". The trading activity of each stock in the report is then updated to 
+      include the activity that quarter and the current stock price.
+   b) generate_13F_activity.py: TO DO. The program takes a csv file containing the 
+      quarter-over-quarter activity and outputs a line of text for each security that 
+      explains the activity and the stock-price-range during the quarter.
+      
 
 
 

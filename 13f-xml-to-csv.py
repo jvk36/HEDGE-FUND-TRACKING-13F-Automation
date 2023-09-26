@@ -1,5 +1,7 @@
 #*****************************************************************************************************
 #
+# USAGE NOTES:
+#
 # 1. Download the 13F information table for each fund tracked as an XML file into this directory
 #    as input.xml.
 # 2. Edit Line 30 of this program as indicated in the line comment, if needed.
