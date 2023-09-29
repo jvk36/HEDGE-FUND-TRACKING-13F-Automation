@@ -3,72 +3,72 @@ INTRODUCTION:
 The project is aimed at automating the process of publishing 13F quarterly reports 
 in the Seeking Alpha platform: https://seekingalpha.com/author/john-vincent . 
 The reports analyze the trading activity of the top hedge funds. Below is a summary
-of the key automation tasks, associated programs/scripts along with their usages:
+of the key automation tasks, associated programs/scripts along with their usages:  
 
 
-1. Build an AI/ML model that summarizes the quarterly reports: 
+1. Build an AI/ML model that summarizes the quarterly reports:   
 
 The idea is to generate a TL;DR for the 13F quarterly reports. The summary 
 along with the quarter-over-quarter comparison spreadsheet should provide the 
 reader with 80% or more of the information in the report without having to read
 through the whole text. A vanilla BART sequence-to-sequence encoder-decoder 
-classifier can provide reasonable summaries:
+classifier can provide reasonable summaries:  
 
 vanilla_summarizer.py: It takes the text of a quarterly report as input 
    and generates a summary using the default model used by the Hugging Face 
-   transformer model API, sshleifer/distilbart-cnn-12-6. 
+   transformer model API, sshleifer/distilbart-cnn-12-6.   
 
 While BART is able to provide reasonable summaries, a more specialized model
 should be more useful to the readership. We fine-tune the vanilla BART  model
 on a dataset that contains quarterly reports done over the last decade on the 
 top hedge funds to generate summaries that can be directly used in the reports.
 The dataset for fine-tuning is collected and pushed to Hugging Face by running 
-the following pipeline:
+the following pipeline:  
 a) copy_all_docx_to_output_folder.py: The script consolidates all the Microsoft
    word documents that contain quarterly reports of each of the hedge funds into
-   an output folder.
+   an output folder.  
 b) convert_all_docx_to_text.py: The script takes the folder containing the reports
-   and converts them into corresponding text documents in another folder.
+   and converts them into corresponding text documents in another folder.  
 c) convert_all_text_to_csv.py: The script takes the folder containing the text 
    documents and returns a csv file with title and body as the columns. The quarterly
    reports from all the hedge fund documents from the past decade are consolidated into
-   a single file. This will be the dataset used for fine-tuning.
-d) push_to_hub_13F_Reports.ipyng: pushed to Hugging Face hub the 13F Reports dataset.
+   a single file. This will be the dataset used for fine-tuning.  
+d) push_to_hub_13F_Reports.ipyng: pushed to Hugging Face hub the 13F Reports dataset.  
 
 
 fine_tune_summarizer_model.py: It fine tunes the BART model facebook/bart-large-cnn 
    to create an optimized model for 13F Reports summary using the jkv53/13F_Reports 
-   dataset in the Hugging Face Hub. 
+   dataset in the Hugging Face Hub.   
    NOTE: The model is not yet created successfully, as it seems to need a GPU/TPU 
-   with large amounts of memory to train.
+   with large amounts of memory to train.  
 
 This model is further optimized by training it with labeled data. Although 
 fine-tuning an unsupervised BART model doesn't require label data, it can benefit from
 it. To do this, we modify the training data generation pipeline to generate an extra
-column in the csv file with training data:
+column in the csv file with training data:  
 
 a) convert_all_text_to_csv_with_labels.py: The script takes the folder containing the text 
    documents and returns a csv file with title, body, and label as columns. The quarterly
    reports from all the hedge fund documents from the past decade are consolidated into
-   a single file. This will be the dataset used for fine-tuning.
+   a single file. This will be the dataset used for fine-tuning.  
 
 fine_tune_model_using_labels.py: It fine tunes the BART model facebook/bart-large-cnn 
    to create an optimized model for 13F Reports summary using the jkv53/13F_Reports_with_labels
-   dataset in the Hugging Face Hub. 
+   dataset in the Hugging Face Hub.   
    NOTE: The model is not yet created successfully, as it seems to need a GPU/TPU with large 
-   amounts of memory to train.
+   amounts of memory to train.  
 
-2. Build a Quarter-over Quarter Comparison Spreadsheet: 13f-xml-to-csv.py
+2. Build a Quarter-over Quarter Comparison Spreadsheet: 13f-xml-to-csv.py  
 
 The quarterly activities of the top hedge funds are available through EDGAR as 
 xml files. To build a comparison spreadsheet, we use a python script 
 13f-xml-to-csv.py which takes the xml file downloaded from EDGAR as input and
 outputs a csv file that consolidates the information. The CSV content is then
 incorporated into a Quarter-over-Quarter comparison spreadsheet which forms
-a key component of the quarterly reports.
+a key component of the quarterly reports.  
 
 3. Build a pipeline that reorders sections and explains the trading activity 
-   of each stock in the 13F report: 
+   of each stock in the 13F report:   
 
    a) reorder_13F_report.py: The program takes a csv containing the quarter-over-quarter 
       activity along with the previous quarter's report text as input. The program then 
@@ -77,10 +77,10 @@ a key component of the quarterly reports.
       re-organizes the report into sections based on the quarterly activity. The sections
       are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
       "KEPT STEADY". The trading activity of each stock in the report is then updated to 
-      include the activity that quarter and the current stock price.
+      include the activity that quarter and the current stock price.  
    b) generate_13F_activity.py: The program takes a csv file containing the 
       quarter-over-quarter activity and outputs a line of text for each security that 
-      explains the activity and the stock-price-range during the quarter.
+      explains the activity and the stock-price-range during the quarter.  
       
 
 
