@@ -23,20 +23,23 @@ should be more useful to the readership. We fine-tune the vanilla BART  model
 on a dataset that contains quarterly reports done over the last decade on the 
 top hedge funds to generate summaries that can be directly used in the reports.
 The dataset for fine-tuning is collected and pushed to Hugging Face by running 
-the following pipeline:  
+the following pipeline:    
+
 a) copy_all_docx_to_output_folder.py: The script consolidates all the Microsoft
    word documents that contain quarterly reports of each of the hedge funds into
    an output folder.  
+
 b) convert_all_docx_to_text.py: The script takes the folder containing the reports
    and converts them into corresponding text documents in another folder.  
+
 c) convert_all_text_to_csv.py: The script takes the folder containing the text 
    documents and returns a csv file with title and body as the columns. The quarterly
    reports from all the hedge fund documents from the past decade are consolidated into
    a single file. This will be the dataset used for fine-tuning.  
+
 d) push_to_hub_13F_Reports.ipyng: pushed to Hugging Face hub the 13F Reports dataset.  
 
-
-fine_tune_summarizer_model.py: It fine tunes the BART model facebook/bart-large-cnn 
+e) fine_tune_summarizer_model.py: It fine tunes the BART model facebook/bart-large-cnn 
    to create an optimized model for 13F Reports summary using the jkv53/13F_Reports 
    dataset in the Hugging Face Hub.   
    NOTE: The model is not yet created successfully, as it seems to need a GPU/TPU 
@@ -50,9 +53,9 @@ column in the csv file with training data:
 a) convert_all_text_to_csv_with_labels.py: The script takes the folder containing the text 
    documents and returns a csv file with title, body, and label as columns. The quarterly
    reports from all the hedge fund documents from the past decade are consolidated into
-   a single file. This will be the dataset used for fine-tuning.  
+   a single file. This will be the dataset used for fine-tuning.    
 
-fine_tune_model_using_labels.py: It fine tunes the BART model facebook/bart-large-cnn 
+b) fine_tune_model_using_labels.py: It fine tunes the BART model facebook/bart-large-cnn 
    to create an optimized model for 13F Reports summary using the jkv53/13F_Reports_with_labels
    dataset in the Hugging Face Hub.   
    NOTE: The model is not yet created successfully, as it seems to need a GPU/TPU with large 
@@ -68,19 +71,20 @@ incorporated into a Quarter-over-Quarter comparison spreadsheet which forms
 a key component of the quarterly reports.  
 
 3. Build a pipeline that reorders sections and explains the trading activity 
-   of each stock in the 13F report:   
+   of each stock in the 13F report:     
 
-   a) reorder_13F_report.py: The program takes a csv containing the quarter-over-quarter 
-      activity along with the previous quarter's report text as input. The program then 
-      looks at the share-count change of each position quarter-over-quarter in the csv 
-      file to determine the section the activity should be reported under. It then
-      re-organizes the report into sections based on the quarterly activity. The sections
-      are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
-      "KEPT STEADY". The trading activity of each stock in the report is then updated to 
-      include the activity that quarter and the current stock price.  
-   b) generate_13F_activity.py: The program takes a csv file containing the 
-      quarter-over-quarter activity and outputs a line of text for each security that 
-      explains the activity and the stock-price-range during the quarter.  
+a) reorder_13F_report.py: The program takes a csv containing the quarter-over-quarter 
+   activity along with the previous quarter's report text as input. The program then 
+   looks at the share-count change of each position quarter-over-quarter in the csv 
+   file to determine the section the activity should be reported under. It then
+   re-organizes the report into sections based on the quarterly activity. The sections
+   are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
+   "KEPT STEADY". The trading activity of each stock in the report is then updated to 
+   include the activity that quarter and the current stock price.    
+
+b) generate_13F_activity.py: The program takes a csv file containing the 
+   quarter-over-quarter activity and outputs a line of text for each security that 
+   explains the activity and the stock-price-range during the quarter.  
       
 
 
