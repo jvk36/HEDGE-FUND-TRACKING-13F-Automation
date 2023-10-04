@@ -27,6 +27,9 @@
 #
 #*****************************************************************************************************
 
+# !pip install requests
+# !pip install --force-reinstall yfinance==0.2.28 # the newer version caused an error and hence using the older one.
+
 import csv
 import yfinance as yf
 import re
