@@ -54,7 +54,7 @@ b) 13F_Report_Summarization.ipynb: It fine tunes the t5 model (google/mt5-small)
 
 Finally, a gradio UI is built that wraps the model interface in a web UI:
 
-a) 13F_Summarizer_Gradio.ipyng: It provides a web interface for the 13F Summarizer 
+a) 13F_Summarizer_Gradio.ipynb: It provides a web interface for the 13F Summarizer 
    functionality. To use it, run the final cell in the notebook and copy/paste the 
    13F Quarterly report that needs to be summarized. The output box will contain a
    three-sentence summary of the full report.
