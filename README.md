@@ -48,9 +48,16 @@ a) convert_all_text_to_csv_with_labels.py: The script takes the folder containin
    reports from all the hedge fund documents from the past decade are consolidated into
    a single file. This will be the dataset used for fine-tuning.    
 
-b) 13F_Report_Summarization.py: It fine tunes the t5 model (google/mt5-small) to create 
+b) 13F_Report_Summarization.ipynb: It fine tunes the t5 model (google/mt5-small) to create 
    an optimized model for 13F Reports summary using the jkv53/13F_Reports_with_labels 
    dataset in the Hugging Face Hub.   
+
+Finally, a gradio UI is built that wraps the model interface in a web UI:
+
+a) 13F_Summarizer_Gradio.ipyng: It provides a web interface for the 13F Summarizer 
+   functionality. To use it, run the final cell in the notebook and copy/paste the 
+   13F Quarterly report that needs to be summarized. The output box will contain a
+   three-sentence summary of the full report.
 
 2. Build a Quarter-over Quarter Comparison Spreadsheet: 13f-xml-to-csv.py  
 
