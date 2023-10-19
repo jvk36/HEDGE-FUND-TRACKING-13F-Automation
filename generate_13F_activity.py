@@ -191,10 +191,10 @@ if __name__ == '__main__':
   output_text_file_path = 'txt_folder\\13F_ACTIVITY.txt'
 
   # Start date of the Quarter
-  start_date = "2023-04-01"
+  start_date = "2023-07-01"
 
   # End date of the Quarter
-  end_date = "2023-06-30"
+  end_date = "2023-09-30"
 
   # Process the CSV and text files.
   process_csv_file(input_csv_file_path, output_text_file_path, start_date, end_date)

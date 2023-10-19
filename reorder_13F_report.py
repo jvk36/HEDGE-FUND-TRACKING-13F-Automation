@@ -4,7 +4,7 @@
 #
 # Ensure input_csv_file_path, input_text_file_path & output_text_file_path values in the main program
 # are updated, if you need to change the defaults - 
-#   csv_folder\\13F_INPUT.csv, txt_folder\\13F_INPUT.txt, and txt_folder\\13F_REORDERED.txt.
+#   csv_folder\\13F_INPUT.csv, txt_folder\\13F_R_I.txt, and txt_folder\\13F_R_O.txt.
 #
 # Input Files:
 #
@@ -12,6 +12,8 @@
 #      As such, ensure the csv is created as follows:
 #       a) Do "Save As" in Excel from the spreadsheet that will be published. This is to ensure
 #          that the list is sorted by position size as it should be in the final report.
+#          NOTE: Use the standard csv option rather than the UTF-8 as the latter will add extra
+#          BOM characters.
 #       b) Ensure that the first column that has the Company Names and Ticker matches the 
 #          names used in the report exactly. This is so that the reordering logic finds the 
 #          matching reports in the input text file. 
@@ -42,6 +44,8 @@
 #*****************************************************************************************************
 
 import csv
+import traceback
+import logging
 
 def convert_string_to_number(string_value):
   """Converts the given string value to a number, removing any commas.
@@ -55,8 +59,9 @@ def convert_string_to_number(string_value):
 
   try:
     return int(string_value.replace(',', ''))
-  except ValueError:
-    return 0
+  except Exception as e:
+      logging.error(traceback.format_exc())
+      return 0
 
 def get_indicators(third_column_value, sixth_column_value):
   """Gets the indicator for the given third and sixth column values.
@@ -115,6 +120,7 @@ def process_csv_file(input_csv_file_path, input_text_file_path, output_text_file
 
       # If no match was found, add the first column value only to the list of first column values for the given indicator.
       else:
+        # print(f"First Column Value in CSV Not Found in text file: '{first_column_value}'")
         indicators_dict[indicator].append(first_column_value)
 
     # Write the first column values and their corresponding lines to the output text file, organized in sections based on the indicators.
@@ -130,10 +136,10 @@ if __name__ == '__main__':
   input_csv_file_path = 'csv_folder\\13F_INPUT.csv'
 
   # Get the path to the input text file.
-  input_text_file_path = 'txt_folder\\13F_INPUT.txt'
+  input_text_file_path = 'txt_folder\\13F_R_I.txt'
 
   # Get the path to the output text file.
-  output_text_file_path = 'txt_folder\\13F_REORDERED.txt'
+  output_text_file_path = 'txt_folder\\13F_R_O.txt'
 
   # Process the CSV and text files.
   process_csv_file(input_csv_file_path, input_text_file_path, output_text_file_path)
