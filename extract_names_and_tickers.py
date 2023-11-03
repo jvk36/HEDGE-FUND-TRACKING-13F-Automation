@@ -35,7 +35,7 @@ def extract_items(text_file):
 
     # Add each item to the list.
     for item_name, item_ticker in zip(item_names, item_tickers):
-      items.append(f"{item_name} ({item_ticker})")
+      items.append(f"{item_name}({item_ticker})")
 
   return items
 

@@ -2,9 +2,9 @@
 #
 # USAGE NOTES:
 #
-# 1. Download the 13F information table for each fund tracked as an XML file into this directory
-#    as input.xml.
-# 2. Edit Line 30 of this program as indicated in the line comment, if needed.
+# 1. Download the 13F information table for each fund tracked as an XML file into the sub-directory
+#    xml_to_csv folder as input.xml.
+# 2. Edit Line 32 of this program as indicated in the line comment, if needed.
 # 3. Run this program to generate output.csv in the same directory. Save it into our fund-tracking
 #    directory. 
 # 4. Open output.csv and our tracking spreadsheet in Excel. 

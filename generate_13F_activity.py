@@ -66,7 +66,7 @@ def get_current_price(ticker):
     current_price = ticker_obj.info['currentPrice']
     return current_price
   except Exception as e:
-    # print(f'Failed to get current stock price for ticker symbol "{ticker}": {e}')
+    print(f'Failed to get current stock price for ticker symbol "{ticker}": {e}')
     return 0
 
 def get_price_range(ticker, start_date, end_date):
