@@ -77,8 +77,7 @@ a) reorder_13F_report.py: The program takes a csv containing the quarter-over-qu
    file to determine the section the activity should be reported under. It then
    re-organizes the report into sections based on the quarterly activity. The sections
    are "NEW STAKES", "STAKE DISPOSALS", "STAKE INCREASES", "STAKE DECREASES", and 
-   "KEPT STEADY". The trading activity of each stock in the report is then updated to 
-   include the activity that quarter and the current stock price.    
+   "KEPT STEADY".     
    NOTE: the program relies on the stock name and tickers in the csv to match the ones
    in the quarterly report. Use the utility extract_names_and_tickers.py to get them
    to match the first time (done after Q2 2023 - so just verify from this point on).
