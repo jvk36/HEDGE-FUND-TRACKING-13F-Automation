@@ -131,10 +131,10 @@ def get_indicator_and_activity(first_column_value, third_column_value, sixth_col
   third_value = convert_string_to_number(third_column_value)
   sixth_value = convert_string_to_number(sixth_column_value)
   price_range_text = "."
+  current_price_text = ""
   if lowest_price != 0 or highest_price != 0:
     price_range_text = f"${lowest_price:.2f} and ${highest_price:.2f}." 
     current_price = get_current_price(ticker)
-    current_price_text = ""
     if current_price != 0:
       current_price_text = f"${current_price:.2f}."
 
