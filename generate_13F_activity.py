@@ -62,8 +62,10 @@ def get_current_price(ticker):
   """
 
   try:
+    ticker = ticker.replace('.', '-')
     ticker_obj = yf.Ticker(ticker)
-    current_price = ticker_obj.info['currentPrice']
+    # current_price = ticker_obj.info['currentPrice']
+    current_price = ticker_obj.history()['Close'].iloc[-1]
     return current_price
   except Exception as e:
     print(f'Failed to get current stock price for ticker symbol "{ticker}": {e}')
@@ -82,6 +84,7 @@ def get_price_range(ticker, start_date, end_date):
   """
 
   try:
+    ticker = ticker.replace('.', '-')
     ticker_obj = yf.Ticker(ticker)
     historical_prices = ticker_obj.history(start=start_date, end=end_date)
     lowest_price = min(historical_prices['Close'])
@@ -122,32 +125,31 @@ def get_indicator_and_activity(first_column_value, third_column_value, sixth_col
     activity - The name & ticker passed in along with associated text that explains the activity.
   """
 
-  activity = first_column_value + ": "
-  ticker = extract_ticker(activity)
+  ticker = extract_ticker(first_column_value)
   if ticker is not None:
     lowest_price, highest_price = get_price_range(ticker, start_date, end_date)
   third_value = convert_string_to_number(third_column_value)
   sixth_value = convert_string_to_number(sixth_column_value)
   price_range_text = "."
   if lowest_price != 0 or highest_price != 0:
-    price_range_text = f" at prices between ${lowest_price:.2f} and ${highest_price:.2f}." 
+    price_range_text = f"${lowest_price:.2f} and ${highest_price:.2f}." 
     current_price = get_current_price(ticker)
     current_price_text = ""
     if current_price != 0:
-      current_price_text = f"The stock currently trades at ${current_price:.2f}."
+      current_price_text = f"${current_price:.2f}."
 
   if third_value != 0 and sixth_value == 0:
-    return 'New Stakes', activity + "The position was established" + price_range_text + current_price_text
+    return 'New Stakes', f"{ticker}: Price Range: {price_range_text}, Close: {current_price_text}."
   elif third_value == 0 and sixth_value != 0:
-    return 'Stake Disposals', activity + "The stake was disposed" + price_range_text + current_price_text
+    return 'Stake Disposals', f"{ticker}: Price Range: {price_range_text}, Close: {current_price_text}."
   elif third_value > sixth_value:
     percentage_change = abs(third_value - sixth_value) * 100 / sixth_value
-    return 'Stake Increases', activity + f"The position was increased by {percentage_change:.0f}% this quarter" + price_range_text + current_price_text
+    return 'Stake Increases', f"{ticker}: Increase %: {percentage_change:.0f}%, Price Range: {price_range_text}, Close: {current_price_text}."
   elif third_value < sixth_value:
     percentage_change = abs(third_value - sixth_value) * 100 / sixth_value
-    return 'Stake Decreases', activity + f"The stake was decreased by {percentage_change:.0f}% this quarter" + price_range_text + current_price_text
+    return 'Stake Decreases', f"{ticker}: Decrease %: {percentage_change:.0f}%, Price Range: {price_range_text}, Close: {current_price_text}."
   else:
-    return 'Kept Steady', activity + "The position was kept steady this quarter." + current_price_text
+    return 'Kept Steady', f"{ticker}: Price Range: {price_range_text}, Close: {current_price_text}."
 
 def process_csv_file(input_csv_file_path, output_text_file_path, start_date, end_date):
   """Processes the given CSV file and outputs a text file with the first column values and a line 
@@ -191,10 +193,10 @@ if __name__ == '__main__':
   output_text_file_path = 'txt_folder\\13F_ACTIVITY.txt'
 
   # Start date of the Quarter
-  start_date = "2023-07-01"
+  start_date = "2024-04-01"
 
   # End date of the Quarter
-  end_date = "2023-09-30"
+  end_date = "2024-06-30"
 
   # Process the CSV and text files.
   process_csv_file(input_csv_file_path, output_text_file_path, start_date, end_date)

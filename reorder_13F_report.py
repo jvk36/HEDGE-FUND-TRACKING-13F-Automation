@@ -60,7 +60,7 @@ def convert_string_to_number(string_value):
   try:
     return int(string_value.replace(',', ''))
   except Exception as e:
-      logging.error(traceback.format_exc())
+      # logging.error(traceback.format_exc())
       return 0
 
 def get_indicators(third_column_value, sixth_column_value):
