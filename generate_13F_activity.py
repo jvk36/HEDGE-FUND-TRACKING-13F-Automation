@@ -28,7 +28,8 @@
 #*****************************************************************************************************
 
 # !pip install requests
-# !pip install --force-reinstall yfinance==0.2.28 # the newer version caused an error and hence using the older one.
+# !pip install yfinance
+# OLD INFO - !pip install --force-reinstall yfinance==0.2.28 # the newer version caused an error and hence using the older one.
 
 import csv
 import yfinance as yf
@@ -193,10 +194,10 @@ if __name__ == '__main__':
   output_text_file_path = 'txt_folder\\13F_ACTIVITY.txt'
 
   # Start date of the Quarter
-  start_date = "2024-04-01"
+  start_date = "2025-01-01"
 
   # End date of the Quarter
-  end_date = "2024-06-30"
+  end_date = "2025-03-31"
 
   # Process the CSV and text files.
   process_csv_file(input_csv_file_path, output_text_file_path, start_date, end_date)

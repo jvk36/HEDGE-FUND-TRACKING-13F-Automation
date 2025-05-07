@@ -6,4 +6,4 @@ evaluate
 transformers[sentencepiece]
 transformers[torch]
 requests
-yfinance==0.2.28
+yfinance
