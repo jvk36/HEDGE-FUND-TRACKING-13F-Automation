@@ -1,9 +1,5 @@
 pandas
 xml-python
-python-docx
 datasets
 evaluate
-transformers[sentencepiece]
-transformers[torch]
 requests
-yfinance
